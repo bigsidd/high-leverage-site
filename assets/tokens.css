@@ -1,0 +1,41 @@
+/* High Leverage Research: design tokens (D15). Editorial ledger + one 8-bit layer.
+   Contrast ratios computed 2026-11-13 (WCAG relative luminance), text vs bg / surface. */
+:root{
+  /* type: Newsreader (display, editorial serif) / Public Sans (body) / IBM Plex Mono (ledger numbers, nameplates) / Silkscreen (pixel stamp + plates only) */
+  --font-display:"Newsreader",Georgia,"Times New Roman",serif;
+  --font-body:"Public Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --font-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --font-pixel:"Silkscreen","IBM Plex Mono",monospace;
+  /* scale 1.25, base 16px */
+  --fs-xs:.8rem;--fs-sm:.875rem;--fs-base:1rem;--fs-lg:1.25rem;--fs-xl:1.563rem;--fs-2xl:1.953rem;
+  --lh-body:1.55;--lh-tight:1.15;
+  /* space: 4px base */
+  --s1:4px;--s2:8px;--s3:12px;--s4:16px;--s5:24px;--s6:32px;--s7:48px;
+  --radius:2px;          /* ledger paper, nearly square; pixels stay square */
+  --touch:44px;
+  /* light (paper) */
+  --bg:#F4F1EA; --surface:#FBF9F4; --line:#D6D0C4;
+  --text:#1C1B19;   /* 15.26 / 16.36 */
+  --muted:#5C574F;  /* 6.35 / 6.81  also station outlines (non-text >=3:1) */
+  --ink:#1F3A5F;    /* 10.18 / 10.91  approve stamp, links, focus ring */
+  --win:#2F6B3A;    /* 5.67 / 6.08 */
+  --loss:#A3361F;   /* 6.00 / 6.43  also the No tray */
+  --warn:#7A4F00; --warn-bg:#F3E6C8; /* 5.76  "design preview" label */
+  /* motion */
+  --dur-fast:120ms; --dur-base:200ms; --dur-step:1600ms; /* replay step */
+  --ease-out:cubic-bezier(.2,.7,.2,1); --ease-stamp:cubic-bezier(.3,1.6,.5,1);
+  --idle-loop:2400ms; /* the one loop: both sprites share a 2-frame breath, steps(2) */
+}
+@media (prefers-color-scheme:dark){:root{
+  --bg:#141413; --surface:#1D1C1A; --line:#3A3833;
+  --text:#ECE8DF;   /* 15.08 / 13.93 */
+  --muted:#A39E93;  /* 6.91 / 6.38 */
+  --ink:#9DB8DD;    /* 9.07 / 8.38 */
+  --win:#8FC79B;    /* 9.49 / 8.77 */
+  --loss:#EE9A84;   /* 8.42 / 7.78 */
+  --warn:#E9C46A; --warn-bg:#3A2E12; /* 7.96 */
+}}
+@media (prefers-reduced-motion:reduce){:root{--dur-fast:0ms;--dur-base:0ms;--idle-loop:0ms}}
+/* Rules: no gradients, no glass, no shadows except a 1px ink focus ring; wins and losses share size and weight;
+   the Silkscreen face appears only on the approve stamp, the No tray and desk nameplates. */
+.lev{margin:0 0 var(--s3);color:var(--muted);font:400 var(--fs-sm)/var(--lh-body) var(--font-body)}
