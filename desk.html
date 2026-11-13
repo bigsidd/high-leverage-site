@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en" data-state="day0">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>How the desk works · High Leverage Research</title>
+<meta name="description" content="How an AI research desk is designed to say no: three seats, one stamp, a public ledger nobody can quietly edit.">
+<link rel="stylesheet" href="assets/fonts.css">
+<link rel="stylesheet" href="assets/tokens.css">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="wrap">
+  <nav class="top nav" aria-label="Site">
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="desk.html" aria-current="page">How it works</a></li>
+      <li><a href="committee.html">Committee</a></li>
+      <li><a href="record.html">Record</a></li>
+    </ul>
+  </nav>
+</div>
+
+<main id="main" class="wrap" tabindex="-1">
+<header class="hd">
+  <p class="kicker">High Leverage Research</p>
+  <h1>How the desk works</h1>
+  <div class="bar1"><span class="preview">Design preview · the desk is not running yet</span></div>
+</header>
+
+<section class="blk" aria-labelledby="h-c">
+  <h2 id="h-c" class="kicker">What the desk commits to</h2>
+  <ol class="commit">
+    <li><b>Nine roles, three seats.</b> A model staffs three roles. The rest are scripts, open desks, or banned.</li>
+    <li><b>No call publishes without Sidd&rsquo;s stamp.</b> The model never publishes.</li>
+    <li><b>Losses stay at full size.</b> No edge is claimed until 100 closed calls and 6 months, whichever comes later. Progress is on <a href="record.html">the record</a>.</li>
+  </ol>
+</section>
+
+<div class="prose">
+  <p class="lede">I&rsquo;m designing an AI research team where the hard part is saying no.</p>
+  <p>High Leverage Research is a small AI equity-research desk. It&rsquo;s built to make calls on whether a stock will beat its benchmark, argue against each call, and publish only the survivors to a public ledger where any edit would show. It&rsquo;s paper only. No real money, no position sizing, no &ldquo;buy at&rdquo; prices. No call goes out without my stamp, and losses get pinned up at the same size as the wins.</p>
+  <p>It isn&rsquo;t running yet, on purpose. What you can see today is the design, the test plan and a preview on sample data. The desk itself waits until I&rsquo;ve cleared a set of gates I set for it, including a legal read.</p>
+
+  <h2>Nine roles, three seats</h2>
+  <p>A desk like this could easily run nine agents, one per job. I&rsquo;m giving only three of them a model seat, and only where a separate model context buys a real check. One writes the memo. One argues against it and can kill it. One decides.</p>
+  <p>The other five jobs run as scripts until they earn a seat, and each has a public bar to get &ldquo;hired&rdquo;: two clean runs, its own test suite, and a written decision record. Their desks in the office are empty, with a HIRING placard on each. The portfolio-manager desk is taped off. That role is banned from the public side.</p>
+  <p>It looks less impressive than nine busy agents. I can defend every seat on the board, and that matters more to me.</p>
+
+  <h2>The model never publishes a call</h2>
+  <p>The agents only draft. A script publishes a call only after I approve it, once, in a private channel. That&rsquo;s about 20 minutes of my week. Scoring and closing happen automatically by fixed rules that anyone can recompute.</p>
+  <ol class="chain" aria-label="The path of one call">
+    <li><span data-scene="data" data-scale="2"></span><div><b>A script pulls the data</b><span>Filings and macro series, nightly. Anomalies are flagged by threshold, as counts.</span></div></li>
+    <li><span data-scene="analyst" data-scale="2"></span><div><b>The analyst drafts</b><span>One tool-less model call. It writes the memo and nothing else.</span></div></li>
+    <li><span data-scene="risk" data-scale="2"></span><div><b>The risk officer argues</b><span>A separate seat writes the dissent. A veto ends the chain in the No tray.</span></div></li>
+    <li><span data-scene="committee" data-scale="2"></span><div><b>The committee decides</b><span>Publish or not, a 3, 6 or 12 month horizon, and a confidence bucket.</span></div></li>
+    <li><span data-scene="stamp" data-scale="3"></span><div><b>I stamp it, once</b><span>In the Sunday digest. Without the stamp, nothing moves.</span></div></li>
+    <li><span data-scene="publish" data-scale="2"></span><div><b>A script publishes</b><span>Schema fields only, never model prose. Scored and closed by rule.</span></div></li>
+  </ol>
+  <p>The part that reads raw company filings can&rsquo;t reach any credential or write anywhere public by itself. A prompt injection hidden in a filing can still try to argue its case, so there&rsquo;s an independent risk check behind it, and then me.</p>
+
+  <h2>No edge claimed until it&rsquo;s earned</h2>
+  <p>Every call will be committed and timestamped before anyone can know how it turns out, with an outside timestamp anchor so any later edit would show. Rows can be closed but never changed. I won&rsquo;t claim the desk has an edge until it has 100 closed calls and six months behind it, whichever comes later. At this pace that&rsquo;s at least two years. I&rsquo;d rather wait than show a flattering number from twelve calls.</p>
+  <p>The record is a paper book anyone can recompute from the public ledger: $10,000 of fake money per call, measured against its benchmark. A paper brokerage account will mirror the same calls for realistic fills, shown as a secondary line.</p>
+
+  <h2>What you&rsquo;re looking at</h2>
+  <p>The homepage is a pixel-art office. Once the desk runs, every animation replays something that was actually published. When the analyst drafts a memo, its desk nameplate switches to the job it&rsquo;s doing. A veto drops the card into the No tray. My approval lands as a stamp. Tap any call on <a href="record.html">the record</a> to see when it was sealed, approved and resolved, then check it against the commit yourself.</p>
+  <p>Today it plays a labeled sample week.</p>
+
+  <h2>Under the hood, as designed</h2>
+  <ul>
+    <li><b>One call per model step.</b> Each step is a single tool-less call, with scripts on either side doing the fetching, checking and publishing.</li>
+    <li><b>Testing.</b> Every seat gets 20 to 30 test cases, each run three times, and any safety failure restarts the whole run.</li>
+    <li><b>Data.</b> Public filings and government macro series. I&rsquo;m leaving news out of v1 on purpose.</li>
+  </ul>
+</div>
+</main>
+
+<footer class="wrap">
+  <p>Paper calls only. Not advice. No real money, no sizing, no holdings.</p>
+  <p>Design preview. High Leverage is a placeholder name.</p>
+  <p>Built by Sidd. <a href="https://siddharthshah.me">siddharthshah.me</a></p>
+</footer>
+<script src="assets/px.js"></script>
+</body>
+</html>

@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en" data-state="day0">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>The record · High Leverage Research</title>
+<meta name="description" content="Every call, stamp, veto and loss on one dated rail, plus the paper book. Sample data in this preview.">
+<link rel="stylesheet" href="assets/fonts.css">
+<link rel="stylesheet" href="assets/tokens.css">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="wrap">
+  <nav class="top nav" aria-label="Site">
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="desk.html">How it works</a></li>
+      <li><a href="committee.html">Committee</a></li>
+      <li><a href="record.html" aria-current="page">Record</a></li>
+    </ul>
+  </nav>
+</div>
+
+<main id="main" class="wrap" tabindex="-1">
+<header class="hd">
+  <p class="kicker">High Leverage Research</p>
+  <h1>The record</h1>
+  <p class="tagline">Every call, stamp, veto and loss, on one dated rail.</p>
+  <div class="bar1">
+    <span class="preview">Design preview · sample data</span>
+    <div class="tog" role="group" aria-label="Show the record as">
+      <button type="button" data-set="day0" aria-pressed="true">Day 0</button>
+      <button type="button" data-set="sample" aria-pressed="false">Sample week</button>
+    </div>
+  </div>
+</header>
+
+<section class="blk" aria-labelledby="h-rules">
+  <h2 id="h-rules" class="kicker">How the record is kept</h2>
+  <ol class="commit">
+    <li><b>Sealed before the outcome.</b> Each call is committed and timestamped, with an outside anchor, before anyone can know how it ends.</li>
+    <li><b>Closed, never edited.</b> A close is a new row. Nothing already written can change.</li>
+    <li><b>Vetoes stay ticker-less.</b> A chain that never publishes shows only its stage and date, now and later.</li>
+  </ol>
+</section>
+
+<section class="blk" aria-labelledby="h-p">
+  <h2 id="h-p" class="kicker">Progress</h2>
+  <p class="prog"><span id="n-closed">0</span> of 100 closed calls
+    <small><span id="n-month">Month 0 of 6.</span> No edge is claimed until both are met. Counts only: percentages appear after 30 closed calls, always next to n.</small></p>
+  <div class="meter" aria-hidden="true"><i id="meter"></i></div>
+  <p class="counts"><span>Wins <b id="n-win">0</b></span><span>Losses <b id="n-loss">0</b></span><span>Open <b id="n-open">0</b></span><span>In the No tray <b id="n-tray">0</b></span></p>
+</section>
+
+<section class="blk" aria-labelledby="h-t">
+  <h2 id="h-t" class="kicker">Per-day activity, last 8 weeks</h2>
+  <div class="ticks" id="ticks" role="img" aria-label="Per-day activity for the last 8 weeks"></div>
+  <div class="tl"><span id="t0">8 weeks ago</span><span id="t1">Today</span></div>
+  <p class="key"><span><i class="k2"></i>call published or closed</span><span><i class="k1"></i>desk ran, nothing published</span><span><i class="k0"></i>nothing recorded</span></p>
+</section>
+
+<section class="blk" id="ledger" aria-labelledby="h-l">
+  <h2 id="h-l">Ledger</h2>
+  <div class="tw" role="region" aria-labelledby="cap-l" tabindex="0">
+  <table>
+    <caption id="cap-l">Calls, newest first. Open an id to see when it was sealed.</caption>
+    <thead><tr><th scope="col">id</th><th scope="col">call</th><th scope="col">horizon</th><th scope="col">status</th></tr></thead>
+    <tbody id="tb"></tbody>
+  </table>
+  </div>
+  <p class="xs muted" data-gap="2">Calls say outperform or underperform against SPY and the sector fund, never buy or sell. Status is written out. A split between the two benchmarks counts as a loss.</p>
+</section>
+
+<section class="blk" aria-labelledby="h-tl">
+  <h2 id="h-tl">Timeline</h2>
+  <p class="small muted">Every published event, newest first, grouped by the Sunday batch it went out with. Calls, stamps, vetoes and closes are tagged. Wins and losses are the same size.</p>
+  <p class="empty d0" data-gap="3">No events yet. The first appear with the first published call, or in the first Sunday batch.</p>
+  <ol class="weeks sw" id="weeks"></ol>
+</section>
+
+<section class="blk" id="book" aria-labelledby="h-b">
+  <h2 id="h-b">The paper book</h2>
+  <p class="small">The rule, fixed in advance: $100,000 of fake money, an equal $10,000 per call, entered at the first official close after the call is committed, held to its horizon. An outperform call holds the stock against SPY. An underperform call holds SPY against the stock. Confidence never changes the amount. Anyone can recompute it from the ledger and public prices.</p>
+  <p class="empty d0" data-gap="3">Nothing in the book yet. It starts at $100,000.</p>
+  <div class="sw">
+    <div class="tw" role="region" aria-labelledby="cap-b" tabindex="0">
+    <table>
+      <caption id="cap-b">Paper book, sample values</caption>
+      <thead><tr><th scope="col">id</th><th scope="col">position</th><th scope="col" class="n">notional</th><th scope="col" class="n">excess</th><th scope="col">status</th></tr></thead>
+      <tbody id="bk"></tbody>
+    </table>
+    </div>
+    <p class="bookline mono">Book value <b id="bk-total"></b>, from $100,000. Losses included at full size.</p>
+    <p class="xs muted" data-gap="2">On the real ledger, book values publish only after the price-data terms and the legal read clear. Until then the page shows counts.</p>
+  </div>
+  <h3 data-gap="5">Broker paper fills <span class="muted small">(secondary line, not the record)</span></h3>
+  <p class="small" data-gap="2">A paper brokerage account mirrors each published outperform call with $10,000 for realistic fills. Underperform calls are not mirrored. Only this one line is ever shown.</p>
+  <p class="bookline mono d0">Broker paper fills: nothing mirrored yet.</p>
+  <p class="bookline mono sw" id="fills"></p>
+</section>
+
+<section class="blk" aria-labelledby="h-f">
+  <h2 id="h-f">The raw feed</h2>
+  <p class="small muted">The replay on the homepage is driven by this feed, one JSON line per event. Same types, same fields as the real one will have.</p>
+  <p class="empty d0" data-gap="2">Empty on day 0.</p>
+  <details class="list sw"><summary>Show the sample week as <code>events.v1</code> lines</summary><pre class="jsonl" id="jsonl" tabindex="0"></pre></details>
+</section>
+</main>
+
+<footer class="wrap">
+  <p>Paper calls only. Not advice. No real money, no sizing, no holdings.</p>
+  <p>Design preview on labeled sample data. XMPL and SMPL are placeholder tickers, and the commit hashes are placeholders too. High Leverage is a placeholder name.</p>
+  <p>Built by Sidd. <a href="https://siddharthshah.me">siddharthshah.me</a></p>
+</footer>
+<script src="assets/sample.js"></script>
+<script src="assets/px.js"></script>
+<script src="assets/record.js"></script>
+</body>
+</html>
