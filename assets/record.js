@@ -1,5 +1,14 @@
 /* The record page: ledger, single-rail timeline, paper book and raw feed, all from sample.js. */
 (function () {
+  var MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  var PX = {
+    fmtDate: function (iso, withTime) {
+      var d = iso.slice(0, 10).split('-'), out = MON[+d[1] - 1] + ' ' + (+d[2]);
+      if (withTime && iso.length > 10) out += ' · ' + iso.slice(11, 16) + ' UTC';
+      return out;
+    },
+    money: function (n) { return (n < 0 ? '−' : n > 0 ? '+' : '') + '$' + Math.abs(n).toLocaleString('en-US'); }
+  };
   var D = window.SAMPLE, $ = function (s) { return document.getElementById(s); };
   function el(t, cls, txt) { var e = document.createElement(t); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; }
   var END = D.week.end;
@@ -44,7 +53,7 @@
   function ledger(on) {
     var tb = $('tb'); tb.textContent = '';
     if (!on || !ROWS.length) {
-      var tr = el('tr'), td = el('td', 'empty', '0 calls. The first row appears only after Sidd stamps a committee decision. The model never publishes.');
+      var tr = el('tr'), td = el('td', 'empty', '0 calls. The first row appears only after Sidd signs a committee decision. The model never publishes.');
       td.colSpan = 4; tr.appendChild(td); tb.appendChild(tr); return;
     }
     ROWS.slice().reverse().forEach(function (r) {
@@ -73,8 +82,9 @@
   }
 
   // timeline
+  var ROUTINE = { 'digest.sent': 1, 'week.quiet': 1, 'row.scored': 1, 'anomaly.flagged': 1, 'thesis.checked': 1 };
   var FOLD = { 'anomaly.flagged': 1, 'row.scored': 1, 'thesis.checked': 1 };
-  var STAGE = { note: 'the note', risk: 'the risk desk', committee: 'the committee', sidd: 'Sidd' };
+  var STAGE = { note: 'the note', risk: 'the risk officer', committee: 'the committee', sidd: 'Sidd' };
   function text(e, n) {
     var r = e.ref && rowOf(e.ref);
     switch (e.type) {
@@ -82,9 +92,9 @@
       case 'row.scored': return 'Scorer ran ' + n + (n > 1 ? ' nights' : ' night') + '. Scores regenerate; rows never change.';
       case 'thesis.checked': return n + ' open ' + (n > 1 ? 'calls' : 'call') + ' re-checked against the thesis. Count only.';
       case 'note.drafted': return 'Analyst note on a flag, covering market-sentinel. No ticker.';
-      case 'note.decided': return 'Sidd marked the week’s notes dig-in or skip. Not a stamp.';
+      case 'note.decided': return 'Sidd triaged the week’s notes.';
       case 'memo.drafted': return 'Memo drafted from a script screen, covering value-scout.';
-      case 'memo.forwarded': return 'A script handed the memo to the risk desk.';
+      case 'memo.forwarded': return 'A script handed the memo to the risk officer.';
       case 'risk.reviewed': return 'Pass, with a dissent attached.';
       case 'decision.made': return 'Committee decided to publish: ' + rowOf(e._row).months + ' months, ' + rowOf(e._row).confidence_bucket + ' confidence.';
       case 'approval.stamped': return 'Sidd stamped ' + r.id + '.';
@@ -115,12 +125,12 @@
       (weeks[sun] = weeks[sun] || []).push(e);
     });
     Object.keys(weeks).sort().reverse().forEach(function (sun) {
-      var li = el('li', 'wk'), h = el('h3', '', 'Week ending Sunday ' + long(sun)), ol = el('ol', 'rail');
+      var li = el('li', 'wk' + (sun === D.week.sunday ? '' : ' earlier')), h = el('h3', '', 'Week ending Sunday ' + long(sun)), ol = el('ol', 'rail');
       var list = weeks[sun].slice().reverse(), seen = {};
       list.forEach(function (e) {
         if (FOLD[e.type]) { if (seen[e.type]) { seen[e.type].n++; seen[e.type].first = e; return; } }
         var item = { e: e, n: 1, first: e }; if (FOLD[e.type]) seen[e.type] = item;
-        item.li = el('li'); ol.appendChild(item.li); item.render = function () {
+        item.li = el('li', ROUTINE[e.type] ? 'routine' : ''); ol.appendChild(item.li); item.render = function () {
           var x = item.e, t = el('time'), body = el('div'), tg = tag(x), p = el('p', tg ? 'big' : '');
           t.setAttribute('datetime', x.ts);
           t.textContent = item.n > 1 ? PX.fmtDate(item.first.ts) + ' to ' + PX.fmtDate(x.ts) : PX.fmtDate(x.ts, true) + (x.ts.length === 10 ? ' · date only' : '');
@@ -136,7 +146,27 @@
       [].forEach.call(ol.children, function (c) { c._item.render(); });
       li.appendChild(h); li.appendChild(ol); box.appendChild(li);
     });
+    view();
   }
+
+  // The sample week is the default view; earlier weeks and routine rows are opt-in.
+  var showEarlier = false, showRoutine = false;
+  function view() {
+    var weeks = document.querySelectorAll('#weeks .wk'), older = 0;
+    [].forEach.call(weeks, function (w) {
+      var isOld = w.classList.contains('earlier'), rows = w.querySelectorAll('.rail > li'), vis = 0;
+      if (isOld) older++;
+      [].forEach.call(rows, function (r) { var h = r.classList.contains('routine') && !showRoutine; r.hidden = h; if (!h) vis++; });
+      w.hidden = (isOld && !showEarlier) || vis === 0;
+    });
+    var be = $('b-earlier'), br = $('b-routine');
+    be.setAttribute('aria-expanded', String(showEarlier));
+    be.textContent = showEarlier ? 'Hide ' + older + ' earlier weeks' : 'Show ' + older + ' earlier weeks';
+    br.setAttribute('aria-pressed', String(showRoutine));
+    $('tl-note').textContent = (showEarlier ? 'Showing all ' + (older + 1) + ' weeks' : 'Showing the sample week, ' + PX.fmtDate(D.week.start) + ' to ' + PX.fmtDate(D.week.sunday)) + (showRoutine ? ', with routine events.' : ', without routine events (digest, quiet weeks, scorer runs, counts).');
+  }
+  $('b-earlier').addEventListener('click', function () { showEarlier = !showEarlier; view(); });
+  $('b-routine').addEventListener('click', function () { showRoutine = !showRoutine; view(); });
 
   function book() {
     var tb = $('bk'), total = D.book.start; tb.textContent = '';
@@ -158,10 +188,15 @@
     $('jsonl').textContent = EV.filter(function (e) { return key(e) >= D.week.start; }).map(function (e) { return JSON.stringify(e); }).join('\n');
   }
 
-  PX.onState(function (s) {
+  // The sample week is the default view. The real ledger (empty today) is the secondary toggle.
+  var built = false;
+  function apply(s) {
     var on = s === 'sample';
+    document.documentElement.dataset.state = s;
+    [].forEach.call(document.querySelectorAll('[data-set]'), function (b) { b.setAttribute('aria-pressed', String(b.dataset.set === s)); });
     progress(on); ticks(on); ledger(on);
-    if (on) { timeline(); book(); feed(); }
-  });
-  PX.start();
+    if (on && !built) { timeline(); book(); feed(); built = true; }
+  }
+  [].forEach.call(document.querySelectorAll('[data-set]'), function (b) { b.addEventListener('click', function () { apply(b.dataset.set); }); });
+  apply('sample');
 })();
