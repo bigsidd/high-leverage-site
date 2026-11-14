@@ -484,7 +484,7 @@
 
     var minX = P(0, D, 0)[0] - 30, maxX = P(W, 0, 0)[0] + 30, minY = P(0, 0, H)[1] - 30, maxY = P(W, D, -0.9)[1] + 30;
     var vb = [minX, minY, maxX - minX, maxY - minY].map(f1);
-    el.innerHTML = '<svg class="floor" xmlns="http://www.w3.org/2000/svg" viewBox="' + vb.join(' ') + '" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="fl-t"><title id="fl-t">The office, on two floors. Downstairs: the logo wall and reception, the double-height wall of every call, the desk pod where the analyst and five more seats work, the risk desk at its head, the server room and a lounge. Upstairs on the mezzanine: the glass committee room, a library of rulebooks, and Sidd\'s corner office, where he signs as portfolio manager.</title><defs>' + defs + AOD + '</defs>' + back + floor + body + '<g id="fl-fx"></g></svg>';
+    el.innerHTML = '<svg class="floor" xmlns="http://www.w3.org/2000/svg" viewBox="' + vb.join(' ') + '" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="fl-t"><title id="fl-t">The office, on two floors. Downstairs: the logo wall and reception, the double-height wall of every call, the desk pod where the analyst works beside the five bench roles, which run as scripts, the risk desk at its head, the server room and a lounge. Upstairs on the mezzanine: the glass committee room, a library of rulebooks, and Sidd\'s corner office, where he signs as portfolio manager.</title><defs>' + defs + AOD + '</defs>' + back + floor + body + '<g id="fl-fx"></g></svg>';
     return { vb: vb };
   }
 

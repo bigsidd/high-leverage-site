@@ -181,7 +181,7 @@
     });
     $('bk-total').textContent = '$' + total.toLocaleString('en-US');
     var f = D.fills;
-    $('fills').textContent = 'Broker paper fills: ' + f.mirrored + ' calls mirrored, ' + f.queued + ' queued for the next open, ' + f.notMirrored + ' underperform calls not mirrored. Paper P&L ' + PX.money(f.pl) + ' (sample).';
+    $('fills').textContent = 'Broker paper fills: ' + f.mirrored + ' calls mirrored, ' + f.queued + ' queued for the next open, ' + f.notMirrored + ' underperform calls not mirrored. Raw paper P&L, not measured against the benchmark: ' + PX.money(f.pl) + ' (sample).';
   }
 
   function feed() {

@@ -15,6 +15,7 @@
   host.setAttribute('aria-hidden', 'true');
   var mq = window.matchMedia('(prefers-color-scheme: dark)');
   function draw() {
+    if (!host.clientWidth) return; // laid out at zero (a background tab): the resize below draws it later
     F.build(host, mq.matches, { vetoes: 3 });
     var svg = host.querySelector('svg'); if (!svg) return;
     svg.removeAttribute('role'); svg.removeAttribute('aria-labelledby');
@@ -31,5 +32,6 @@
   draw();
   if (mq.addEventListener) mq.addEventListener('change', draw); else if (mq.addListener) mq.addListener(draw);
   var last = host.clientWidth;
+  if (window.ResizeObserver) new ResizeObserver(function () { if (host.clientWidth && host.clientWidth !== last) { last = host.clientWidth; draw(); } }).observe(host);
   window.addEventListener('resize', function () { if (host.clientWidth !== last) { last = host.clientWidth; draw(); } });
 })();
