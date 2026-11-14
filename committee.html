@@ -54,7 +54,7 @@
           <dt>Reads</dt><dd>Facts from filings, built by script. Ratio colors (green, yellow, red). The script&rsquo;s intrinsic-value range and a valuation bucket in place of a price. Filing excerpts, passed in as quoted data. The prior memo and pillar states, if the name has a history.</dd>
           <dt>Writes</dt><dd>A memo: a thesis of up to 120 words, what the market has wrong, a value range inside the script&rsquo;s, a 3, 6 or 12 month horizon, exactly three risks, pillars that must stay true and what would break each, bull, base and bear weights that sum to 100, unknowns, and claims labeled sourced, estimated or unverified. Anomaly notes are 60 words at most, and &ldquo;no cause found&rdquo; is a valid answer.</dd>
           <dt>Refuses</dt><dd>Sizing, entry zones, price targets and &ldquo;buy at&rdquo; language. Any ticker that isn&rsquo;t in its input. Instructions hidden in filing text. Any claim without a label.</dd>
-          <dt>Tested by</dt><dd>115 cases across its five routines, each run 3 times, plus at least 2 planted instructions and 2 detector misses per routine.</dd>
+          <dt>Test plan</dt><dd>Will be tested on 115 cases across its five routines, each run 3 times, plus at least 2 planted instructions and 2 detector misses per routine.</dd>
           <dt>Can&rsquo;t</dt><dd>Publish, use tools, see a price, start its own deep dive, move a thesis&rsquo;s state (it proposes and a script moves it), or know whether a memo was requested.</dd>
           <dt>Also covers</dt><dd>The market-sentinel, value-scout and thesis-tracker jobs while those roles are on the bench.</dd>
         </dl>
@@ -73,7 +73,7 @@
           <dt>Writes</dt><dd>Pass or veto. A dissent that argues against the call, required even on a pass. Scores from 1 to 5 on the thesis, loss risk and direction. Checks for hard red flags such as accounting problems or dilution to survive.</dd>
           <dt>Then a script</dt><dd>Forces a veto if any hard red flag fires, scores the valuation gap itself from the price, and decides which direction the call is eligible for. A script can turn a pass into a veto, never a veto into a pass.</dd>
           <dt>Refuses</dt><dd>Approving its own memo. An empty dissent: a dissent under 40 characters, or one that copies the thesis, is withheld. Reading raw filings.</dd>
-          <dt>Tested by</dt><dd>30 cases, each run 3 times: a memo with a planted flaw that must draw a veto 3 of 3 times, a clean memo that still needs a real dissent, hidden sizing language, and a value range outside the script&rsquo;s.</dd>
+          <dt>Test plan</dt><dd>Will be tested on 30 cases, each run 3 times: a memo with a planted flaw that must draw a veto 3 of 3 times, a clean memo that still needs a real dissent, hidden sizing language, and a value range outside the script&rsquo;s.</dd>
           <dt>Can&rsquo;t</dt><dd>Publish, approve anything, see a price, or score valuation.</dd>
         </dl>
       </div>
@@ -91,7 +91,7 @@
           <dt>Writes</dt><dd>Publish or not. Outperform or underperform. The horizon. A low, medium or high confidence bucket. A written answer to the dissent&rsquo;s strongest point, marked accepted, rebutted or partly accepted. A reason code, such as no edge or dissent stands.</dd>
           <dt>Then a script</dt><dd>Rejects any call past the gate: it can decline, never upgrade. It caps the confidence bucket, requires the horizon and value range to match the memo, and allows one open call per company.</dd>
           <dt>Refuses</dt><dd>Deciding without the dissent attached. Any sizing; its output has no field for it. Publishing: it outputs a decision, and only my approval plus a script can publish.</dd>
-          <dt>Tested by</dt><dd>30 cases, each run 3 times, including a risk veto it can&rsquo;t override quietly, split benchmarks and a low-confidence pass. With the risk veto forced off, it must still decline the planted-flaw memo in at least 2 of 3 runs.</dd>
+          <dt>Test plan</dt><dd>Will be tested on 30 cases, each run 3 times, including a risk veto it can&rsquo;t override quietly, split benchmarks and a low-confidence pass. With the risk veto forced off, it must still decline the planted-flaw memo in at least 2 of 3 runs.</dd>
           <dt>Can&rsquo;t</dt><dd>Publish, re-estimate the value range, see a price, or see my private holdings.</dd>
         </dl>
       </div>
@@ -162,7 +162,7 @@
   <h2 id="h-on" class="kicker">How the seats switch on</h2>
   <p class="small">One at a time, so a bad memo format can&rsquo;t cascade through two untested seats. Each step has to pass its gate before the next seat can depend on it.</p>
   <ol class="steps">
-    <li><b>The scorer and the ledger checks.</b> The scorer passes its holiday, split, dividend, delisting and ticker-change tests, and the ledger checks reject every planted bad row.</li>
+    <li><b>The scorer and the ledger checks.</b> Gate: the scorer must pass its holiday, split, dividend, delisting and ticker-change tests, and the ledger checks must reject every planted bad row.</li>
     <li><b>The analyst.</b> Two clean scheduled runs at the proving cadence, one at the real cadence, and its tests at the bar.</li>
     <li><b>The risk officer.</b> The same, plus a memo with a deliberate flaw that must draw a veto.</li>
     <li><b>The committee.</b> The same, plus &ldquo;nothing published without approval&rdquo; at 100%.</li>

@@ -36,7 +36,8 @@
     svg.style.overflow = 'visible'; svg.style.transformOrigin = '0 0'; svg.style.willChange = 'transform';
     shown = '';
   }
-  function fit(v) { // every view matches the container's shape, so the camera is a plain translate and scale
+  function fit(v) {
+    if (!cw || !ch) return v; // every view matches the container's shape, so the camera is a plain translate and scale
     var a = cw / ch, cx = v[0] + v[2] / 2, cy = v[1] + v[3] / 2, w = v[2], h = v[3];
     if (w / h < a) w = h * a; else h = w / a;
     return [cx - w / 2, cy - h / 2, w, h];
@@ -64,6 +65,7 @@
   // ---------- camera: the viewBox is written once per move; the move itself is a CSS transform ----------
   var cam = { x: 0, y: 0, w: 1, h: 1 }, shown = '';
   function apply(dest) {
+    if (!cw || !ch || !cam.w) return; // a hidden or zero-size box: nothing to frame yet (it would write Infinity)
     var key = dest.map(function (n) { return n.toFixed(1); }).join(' ');
     if (shown !== key) { svg.setAttribute('viewBox', key); shown = key; }
     var k = cw / cam.w, s = dest[2] / cam.w, tx = -(cam.x - dest[0]) * k, ty = -(cam.y - dest[1]) * k;
@@ -104,7 +106,7 @@
   var DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   function when(ts) {
     if (ts.length === 10) return DAYS[new Date(ts + 'T12:00:00Z').getUTCDay()];
-    return new Date(ts).toLocaleString('en-US', { timeZone: 'America/New_York', weekday: 'short', hour: 'numeric', minute: '2-digit' }).replace(',', '');
+    return new Date(ts).toLocaleString('en-US', { timeZone: 'America/New_York', weekday: 'short', hour: 'numeric', minute: '2-digit' }).replace(',', '') + ' ET';
   }
   var SAY = {
     'row.closed': function (e, r) { return r.id + ' reaches its ' + r.months + '-month horizon and closes as a ' + r.outcome + '. It stays on the wall, the same size as a win.'; },
@@ -113,7 +115,7 @@
     'memo.drafted': function (e, r) { return 'The analyst writes a memo on ' + r.ticker + '.'; },
     'memo.forwarded': function () { return 'A script forwards it. The risk officer sees every memo, unfiltered.'; },
     'risk.reviewed': function () { return 'The risk officer lets it through, with a written dissent attached.'; },
-    'decision.made': function (e, r) { return 'The committee decides: ' + r.ticker + ' to ' + r.direction + ' the market over ' + r.months + ' months.'; },
+    'decision.made': function (e, r) { return 'The committee decides: ' + r.ticker + ' to ' + r.direction + ' SPY and its sector fund over ' + r.months + ' months.'; },
     'approval.stamped': function () { return 'I sign it. No call publishes without my signature.'; },
     'row.published': function (e, r) { return 'Published as ' + r.id + ', sealed before anyone knows the outcome.'; }
   };
@@ -213,7 +215,7 @@
     if (capOn === s) return; capOn = s;
     var n = s.e ? STN[s.e.type] || 0 : 0;
     [].forEach.call(ticks, function (li, i) { li.className = i + 1 === n ? 'on' : i + 1 < n ? 'past' : ''; });
-    whenEl.innerHTML = s.when + ' <span>Sample week</span>'; whatEl.textContent = (CLIP && s.short) || s.what;
+    whenEl.innerHTML = s.when + ' <span>Sample week · preview</span>'; whatEl.textContent = (CLIP && s.short) || s.what;
     if (!reduce && tl && !tl.paused()) gsap.fromTo(whatEl, { opacity: 0, y: 4 }, { opacity: 1, y: 0, duration: 0.15 });
   }
   function say(s) { return function () { show(s); }; }
@@ -246,7 +248,7 @@
     var o = center[0].toFixed(1) + ' ' + center[1].toFixed(1);
     tl.to(outEl, { scaleY: 0, duration: 0.16, ease: 'power2.in', svgOrigin: o })
       .set(outEl, { opacity: 0 })
-      .fromTo(inEl, { scaleY: 0, opacity: 1 }, { scaleY: 1, duration: 0.2, ease: 'power2.out', svgOrigin: o });
+      .fromTo(inEl, { scaleY: 0, opacity: 1 }, { immediateRender: false, scaleY: 1, duration: 0.2, ease: 'power2.out', svgOrigin: o });
   }
   var LB = {}; // label times, kept by hand: HyperFrames wraps the timeline and hides its own labels
   function lab(n) { LB[n] = tl.duration(); tl.addLabel(n); return tl; }
@@ -290,11 +292,11 @@
       } else if (t === 'memo.forwarded') {
         cap(s); hop(SPOT.risk, 1.1, 1.2); tl.to({}, { duration: 0.5 });
       } else if (t === 'risk.reviewed') {
-        cap(s).fromTo(el('fx-dissent'), { opacity: 0, y: 3 }, { opacity: 1, y: 0, duration: 0.3, ease: 'power2.out' });
+        cap(s).fromTo(el('fx-dissent'), { opacity: 0, y: 3 }, { immediateRender: false, opacity: 1, y: 0, duration: 0.3, ease: 'power2.out' });
         type(r.ticker, r.ticker + ' · dissent', 0.35); tl.to({}, { duration: 1.0 });
       } else if (t === 'decision.made') { // the card leads; the camera lands just after it
         lab('c' + i); hop(SPOT.committee, 1.1, 1.6, 'c' + i); move('committee', 1.3, 'c' + i + '+=0.15');
-        tl.fromTo(el('fl-m3-ring'), { opacity: 0 }, { keyframes: [{ opacity: 1, duration: 0.3 }, { opacity: 0.35, duration: 1.2 }, { opacity: 0, duration: 0.4 }] }, 'c' + i + '+=1.1');
+        tl.fromTo(el('fl-m3-ring'), { opacity: 0 }, { immediateRender: false, keyframes: [{ opacity: 1, duration: 0.3 }, { opacity: 0.35, duration: 1.2 }, { opacity: 0, duration: 0.4 }] }, 'c' + i + '+=1.1');
         cap(s); type(r.ticker + ' · dissent', r.ticker + ' · ' + r.direction.toUpperCase() + ' · ' + r.months + 'M', 0.4); tl.to({}, { duration: 1.2 });
       } else if (t === 'approval.stamped') { // the one physical beat in the piece
         lab('c' + i); hop(SPOT.sidd, 1.1, 1.8, 'c' + i); var dest = move('sidd', 1.3, 'c' + i + '+=0.15');
@@ -311,11 +313,11 @@
           .addLabel('hit', 't0+=0.44')
           .to(el('fl-stamp'), { keyframes: [{ scaleX: 1.08, scaleY: 0.85, duration: 0.066 }, { scaleX: 1, scaleY: 1, duration: 0.12, ease: 'back.out(3)' }], transformOrigin: '50% 100%' }, 'hit')
           .to(pos, { keyframes: [{ lift: -0.08, duration: 0.05 }, { lift: 0, duration: 0.07 }], onUpdate: placeCard }, 'hit')
-          .fromTo(el('fx-inner'), { scaleY: 0.96, x: 0 }, { keyframes: [{ scaleY: 1, x: 2 * px, duration: 0.04 }, { x: -2 * px, duration: 0.04 }, { x: 0, duration: 0.04 }], transformOrigin: '50% 50%' }, 'hit') // the paper flexes and shivers
+          .fromTo(el('fx-inner'), { scaleY: 0.96, x: 0 }, { immediateRender: false, keyframes: [{ scaleY: 1, x: 2 * px, duration: 0.04 }, { x: -2 * px, duration: 0.04 }, { x: 0, duration: 0.04 }], transformOrigin: '50% 50%' }, 'hit') // the paper flexes and shivers
           .to(cam, { keyframes: [{ y: push[1] - a, duration: 0.035 }, { y: push[1] + a / 2, duration: 0.035 }, { y: push[1] - a / 4, duration: 0.035 }, { y: push[1], duration: 0.035 }], ease: 'none', onUpdate: function () { apply(push); } }, 'hit')
-          .fromTo(el('fx-ink'), { opacity: 1, scale: 1.15, transformOrigin: '50% 50%' }, { scale: 1, duration: 0.15, ease: 'power2.out', transformOrigin: '50% 50%' }, 'hit')
-          .fromTo(el('fx-flecks'), { opacity: 0.9 }, { opacity: 0, duration: 0.5, ease: 'power1.in' }, 'hit')
-          .fromTo(el('fx-ring'), { opacity: 0.7, scale: 1, transformOrigin: '50% 50%' }, { opacity: 0, scale: 1.25, duration: 0.3, ease: 'power2.out', transformOrigin: '50% 50%' }, 'hit')
+          .fromTo(el('fx-ink'), { opacity: 1, scale: 1.15, transformOrigin: '50% 50%' }, { immediateRender: false, opacity: 1, scale: 1, duration: 0.15, ease: 'power2.out', transformOrigin: '50% 50%' }, 'hit')
+          .fromTo(el('fx-flecks'), { opacity: 0.9 }, { immediateRender: false, opacity: 0, duration: 0.5, ease: 'power1.in' }, 'hit')
+          .fromTo(el('fx-ring'), { opacity: 0.7, scale: 1, transformOrigin: '50% 50%' }, { immediateRender: false, opacity: 0, scale: 1.25, duration: 0.3, ease: 'power2.out', transformOrigin: '50% 50%' }, 'hit')
           .to(el('fl-stamp'), { y: dy - 14 * px, duration: 0.25, ease: 'power2.out' }, 'hit+=0.35')
           .to(el('fl-stamp'), { x: 0, y: 0, duration: 0.4, ease: 'power2.inOut' })
           .to(grip, { v: 0, duration: 0.3, ease: 'power2.inOut' })
@@ -329,7 +331,7 @@
         cap(s);
         tl.to(el('fx-chip'), { opacity: 0, duration: 0.15 }).to(el('fx-inner'), { rotation: -60, duration: 0.2, ease: 'power2.out', transformOrigin: '50% 50%' }) // floor plane to wall plane: a -60° turn in this projection
           .to(el('fx-inner'), { scaleY: 0, duration: 0.16, ease: 'power2.in', transformOrigin: '50% 50%' }).set(el('fx-card'), { opacity: 0, onComplete: placeCard })
-          .fromTo(el('fl-c-' + r.id), { scaleY: 0 }, { scaleY: 1, duration: 0.2, ease: 'power2.out', svgOrigin: FLOOR.centers[r.id][0] + ' ' + FLOOR.centers[r.id][1] });
+          .fromTo(el('fl-c-' + r.id), { scaleY: 0 }, { immediateRender: false, scaleY: 1, duration: 0.2, ease: 'power2.out', svgOrigin: FLOOR.centers[r.id][0] + ' ' + FLOOR.centers[r.id][1] });
         tl.to({}, { duration: 1.6 });
       }
       lab('e' + i);
@@ -381,6 +383,7 @@
   }
   var rz;
   addEventListener('resize', function () { clearTimeout(rz); rz = setTimeout(function () { rebuild(false); }, 150); });
+  if (window.ResizeObserver) { var seen = cw; new ResizeObserver(function () { var w = art.getBoundingClientRect().width; if (w && w !== seen) { seen = w; clearTimeout(rz); rz = setTimeout(function () { rebuild(false); }, 150); } }).observe(art); } // a tab opened in the background lays out at 0 first
   if (mq.addEventListener) mq.addEventListener('change', function () { rebuild(true); });
   window.HLR = { get tl() { return tl; }, get labels() { return LB; }, beats: beats, steps: all };
 })();

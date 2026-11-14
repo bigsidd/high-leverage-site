@@ -59,7 +59,7 @@
     <li>Only a script acts: it opens the next step, or, after my approval, publishes.</li>
   </ol>
   <p>I chose this over an open-ended agent loop for three reasons. Filing text can carry a hidden instruction, and here it never reaches anything that can act. Each routine has fixed inputs, so it can be tested case by case. And a model is bad at fixed arithmetic and at remembering a rule, so the arithmetic and the rules live in code.</p>
-  <p>Each seat runs as its own routine with its own work item, cap slot and final status. I rejected one script that chains all three calls: a failure halfway would leave no clean status, and the independence would be one process pretending to be three. An agent gets promoted only if a test fails because of the single-call shape. None has.</p>
+  <p>Each seat runs as its own routine with its own work item, cap slot and final status. I rejected one script that chains all three calls: a failure halfway would leave no clean status, and the independence would be one process pretending to be three. An agent gets promoted only if a test fails because of the single-call shape. No test has run yet.</p>
   <p>Every run ends in one of two states: done, or waiting for me with the reason in the first line. Never stuck. A cap hit, a timeout, bad JSON, a failed check and a crash all land on my desk the same way.</p>
 
   <h2 id="one-call">One call, end to end</h2>
@@ -132,7 +132,7 @@
     </tbody>
   </table>
   </div>
-  <p data-gap="3">Every script that can call a model carries a daily model-call cap, 20 calls per day by default. Each call takes a slot before it runs, and a call that fails still counts. Anomaly notes get their own small lane, so a week full of flagged moves canso a busy news week can&rsquo;t starversquo;t starve the decision chain. Over the cap, no call is made and the run comes to me listing what didn&rsquo;t run. The Sunday digest prints calls against the cap.</p>
+  <p data-gap="3">Every script that can call a model carries a daily model-call cap, 20 calls per day by default. Each call takes a slot before it runs, and a call that fails still counts. Anomaly notes get their own small lane, so a busy news week can&rsquo;t starve the decision chain. Over the cap, no call is made and the run comes to me listing what didn&rsquo;t run. The Sunday digest prints calls against the cap.</p>
   <p>Each unit of work has one tracked item with a fixed name, such as the week plus the ticker. A retry or a re-fired routine finds that item and never spends a second slot on the same work.</p>
   <p>All of these numbers are untested starting values. Proving will tune them.</p>
 
@@ -172,7 +172,7 @@
     <li><b>No ticker before publication.</b> Showing that research is pending on a name would leak it.</li>
     <li><b>Events never carry</b> model prose, filing text, my private data or anything about the restricted list.</li>
   </ul>
-  <p>The rule for the office: every replay animation maps to one event type, and nothing replays without a published event behind it. A veto drops a card into the No tray. My signature lands as a stamp. Server lights, coffee steam and the day-night sky are set dressing, not replay. Today it all plays a labeled sample week on made-up tickers, XMPL and SMPL.</p>
+  <p>The rule for the office: every replay animation maps to one event type, and nothing replays without a published event behind it. A veto drops a card into the No tray. My signature lands as a stamp. The only other motion is set dressing: typing hands and turning heads while the week plays, and the night sky in dark mode. Today it all plays a labeled sample week on made-up tickers, XMPL and SMPL.</p>
   <p>The three figures with blue face plates are the model seats: M1 the analyst, M2 the risk officer, M3 the committee. The grey, outlined figures are the bench. I&rsquo;m the only person drawn.</p>
 
   <h2 id="tests">How it&rsquo;s tested</h2>
