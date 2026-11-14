@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>A week at the desk</title>
+<link rel="stylesheet" href="assets/fonts.css">
+<link rel="stylesheet" href="assets/tokens.css">
+<link rel="stylesheet" href="assets/site.css">
+<link rel="stylesheet" href="assets/home.css">
+<link rel="stylesheet" href="clip.css">
+<style>#hf{width:960px;height:540px}</style>
+</head>
+<body class="home2 landscape" data-clip="week">
+<div id="hf" data-composition-id="week" data-start="0" data-duration="24.05" data-width="960" data-height="540" data-fps="30">
+  <section class="stage" id="office">
+    <div class="art" id="art"></div>
+    <ol class="tags" id="tags"></ol>
+    <div class="now">
+      <ol class="ticks" aria-hidden="true"><li></li><li></li><li></li><li></li><li></li></ol>
+      <p class="when">Nov 2&ndash;8 <span>Sample week</span></p>
+      <p class="what">A sample week on the desk.</p>
+      <button type="button" class="btn now-btn" id="pp">Pause</button>
+      <button type="button" class="btn now-btn" id="nx" hidden>Next step</button>
+    </div>
+  </section>
+  <p class="cold" id="cold1">Three AI models.<br>One human signature.</p>
+  <div class="endcard" id="end">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 12.6 21.5 6.4" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" fill="none"/><path d="M8 11 4 19h8z" fill="currentColor"/></svg>
+    <p class="e2">High Leverage Research</p>
+    <p class="e1">Follow the record</p>
+    <p class="e4">siddharthshah.me</p>
+    <p class="e3">Paper money &middot; sample week &middot; losses stay up</p>
+  </div>
+  <ol id="steps" hidden></ol>
+</div>
+<script src="assets/vendor/gsap-3.13.0.min.js"></script>
+<script src="assets/sample.js"></script>
+<script src="assets/floor.js"></script>
+<script src="assets/home.js"></script>
+</body>
+</html>

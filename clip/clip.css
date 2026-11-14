@@ -1,0 +1,42 @@
+/* HyperFrames compositions: the homepage scene at a fixed frame size, chrome removed, captions sized for a phone feed */
+html,body{margin:0;overflow:hidden;background:var(--bg)}
+#hf{position:relative;overflow:hidden;background:var(--bg);--u:calc(var(--w, 1080) * 1px)}
+#hf .stage{position:absolute;inset:0;min-height:0;display:block}
+#hf .art{position:absolute;inset:0;margin:0;min-height:0}
+#hf .now-btn,#hf .legend{display:none}
+#hf .tag{transition:none}
+#hf .now{grid-template-columns:1fr;box-shadow:0 2px 0 rgba(0,0,0,.04)}
+#hf .now .when,#hf .now .what,#hf .now .ticks{grid-row:auto}
+.cold{position:absolute;left:6%;right:6%;top:5%;z-index:5;margin:0;padding:40px 36px;text-align:center;font:500 68px/1.08 var(--font-display);color:#F6F1E7;background:#161A22;border-radius:4px}
+.endcard{position:absolute;inset:0;z-index:6;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:var(--bg);color:var(--text);text-align:center}
+.endcard svg{width:84px;height:84px;color:var(--ink);margin-bottom:18px}
+.endcard p{margin:0}
+.e1{font:500 76px/1.05 var(--font-display);max-width:86%;margin-top:6px!important}
+.e2{font:600 30px/1.3 var(--font-display)}
+.e3{font:500 20px/1.4 var(--font-mono);color:var(--muted);margin-top:26px!important}
+.e4{font:600 44px/1.3 var(--font-mono);color:var(--ink);margin-top:18px!important}
+/* 4:5 feed master: captions in the top third, large */
+body.feed #hf .now{left:48px;right:48px;top:48px;bottom:auto;width:auto;padding:26px 30px}
+body.feed #hf .when{font-size:22px}
+body.feed #hf .what{font-size:54px;line-height:1.12;font-family:var(--font-display);-webkit-line-clamp:2}
+body.feed #hf .ticks li{height:6px}
+body.feed #hf .tag{font-size:22px;padding:6px 14px 6px 8px}
+body.feed #hf .tag b{width:32px;height:32px;font-size:19px}
+body.feed #hf .art{top:300px}
+/* 16:9 */
+body.landscape #hf .now{width:23rem}
+body.landscape #hf .what{font-size:22px;font-family:var(--font-display)}
+body.landscape .cold{font-size:44px;left:18%;right:18%}
+body.landscape .e1{font-size:46px}
+body.landscape .e4{font-size:26px}
+body.landscape .endcard svg{width:56px;height:56px}
+/* 9:16 phone poster */
+body.portrait #hf .now{left:16px;right:16px;top:128px;bottom:auto;width:auto}
+body.portrait #hf .what{font-size:30px;line-height:1.15;font-family:var(--font-display)}
+body.portrait #hf .art{top:300px;bottom:170px}
+body.portrait .cold{font-size:38px;top:128px}
+body.portrait .e1{font-size:40px}
+body.portrait .e4{font-size:24px}
+body.portrait .e2{font-size:18px}
+body.portrait .e3{font-size:12px}
+body.portrait .endcard svg{width:60px;height:60px}

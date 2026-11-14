@@ -1,11 +1,10 @@
 /* High Leverage Research: design tokens (D15). Editorial ledger + one 8-bit layer.
    Contrast ratios computed 2026-11-13 (WCAG relative luminance), text vs bg / surface. */
 :root{
-  /* type: Newsreader (display, editorial serif) / Public Sans (body) / IBM Plex Mono (ledger numbers, nameplates) / Silkscreen (pixel stamp + plates only) */
+  /* type: Newsreader (display, editorial serif) / Public Sans (body) / IBM Plex Mono (ledger numbers, nameplates) */
   --font-display:"Newsreader",Georgia,"Times New Roman",serif;
   --font-body:"Public Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
   --font-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
-  --font-pixel:"Silkscreen","IBM Plex Mono",monospace;
   /* scale 1.25, base 16px */
   --fs-xs:.8rem;--fs-sm:.875rem;--fs-base:1rem;--fs-lg:1.25rem;--fs-xl:1.563rem;--fs-2xl:1.953rem;
   --lh-body:1.55;--lh-tight:1.15;
@@ -37,5 +36,5 @@
 }}
 @media (prefers-reduced-motion:reduce){:root{--dur-fast:0ms;--dur-base:0ms;--idle-loop:0ms}}
 /* Rules: no gradients, no glass, no shadows except a 1px ink focus ring; wins and losses share size and weight;
-   the Silkscreen face appears only on the approve stamp, the No tray and desk nameplates. */
+   no pixel-art type. */
 .lev{margin:0 0 var(--s3);color:var(--muted);font:400 var(--fs-sm)/var(--lh-body) var(--font-body)}

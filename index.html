@@ -1,80 +1,68 @@
 <!doctype html>
-<html lang="en" data-state="day0">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="color-scheme" content="light dark">
-<title>High Leverage Research · design preview</title>
-<meta name="description" content="Design preview of an AI equity-research desk built to tell you no, drawn as a pixel office. Sample data only.">
+<title>High Leverage Research</title>
+<meta name="description" content="Inside an AI investment committee: three models draft and challenge each call, and nothing publishes until Sidd signs it. Paper money only, sample data, not advice.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="High Leverage Research: inside an AI investment committee">
+<meta property="og:description" content="Three models draft and challenge each call. Nothing publishes until Sidd signs it. Paper money only, sample week, not advice.">
+<meta property="og:url" content="https://bigsidd.github.io/site-high-leverage/">
+<meta property="og:image" content="https://bigsidd.github.io/site-high-leverage/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="An isometric two-floor office. Sidd, the portfolio manager, stamps a call approved at his desk.">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="assets/fonts.css">
 <link rel="stylesheet" href="assets/tokens.css">
 <link rel="stylesheet" href="assets/site.css">
+<link rel="stylesheet" href="assets/home.css">
 </head>
-<body class="home">
-<a class="skip" href="#scene">Skip to the office</a>
-<div class="wide">
-  <nav class="top nav" aria-label="Site">
+<body class="home2">
+<a class="skip" href="#office">Skip to the office</a>
+<header class="bar">
+  <h1 class="mark"><a href="index.html" aria-current="page"><svg class="lever" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M2.5 12.6 21.5 6.4" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" fill="none"/><path d="M8 11 4 19h8z" fill="currentColor"/></svg><span>High Leverage Research</span></a></h1>
+  <button type="button" class="menu" aria-expanded="false" aria-controls="sitenav">Menu</button>
+  <nav aria-label="Site" id="sitenav">
     <ul>
-      <li><a href="index.html" aria-current="page">Home</a></li>
       <li><a href="desk.html">How it works</a></li>
       <li><a href="committee.html">Committee</a></li>
-      <li><a href="record.html">Record</a></li>
+      <li><a href="record.html">The record</a></li>
     </ul>
   </nav>
-  <header class="hd hd-row">
-    <div>
-      <h1>High Leverage Research</h1>
-      <p class="tagline">AI built to tell you no.</p>
-      <p class="lev">The only leverage here is judgment: paper only, no margin, no sizing.</p>
-    </div>
-    <span class="preview">Design preview · sample data</span>
-  </header>
-</div>
+</header>
 
-<main id="main" class="wide">
-  <h2 class="sr">The office</h2>
-  <div class="scene" id="scene">
-    <div class="art"></div>
-    <div class="hot" role="group" aria-label="Rooms in the office. Each one opens a card that explains it."></div>
-    <div class="icard" id="card" role="region" aria-label="Room details" hidden>
-      <h3></h3>
-      <p></p>
-      <div class="icard-ft"><a href="#"></a><button type="button" class="x">Close</button></div>
+<main id="main">
+  <section class="stage" id="office" aria-label="The office">
+    <div class="lede">
+      <p class="line">Inside an AI investment committee.</p>
+      <p class="sub">Three models draft and challenge each call. Nothing publishes until I sign it. Paper money only.</p>
+      <p class="pre">Design preview &middot; sample week &middot; the desk isn&rsquo;t running yet</p>
     </div>
-  </div>
-
-  <div class="ctlbar">
-    <div class="ctlrow">
-      <div class="tog" role="group" aria-label="Show the office as">
-        <button type="button" data-set="day0" aria-pressed="true">Day 0</button>
-        <button type="button" data-set="sample" aria-pressed="false">Sample week</button>
-      </div>
-      <button type="button" class="btn" id="pp">Pause</button>
-      <button type="button" class="btn" id="nx" hidden>Next step</button>
+    <div class="art" id="art"></div>
+    <ol class="tags" id="tags" aria-label="Stations, in the order a call moves"></ol>
+    <p class="legend">Blue: voting models &middot; Grey: the bench &middot; Sidd: the one person</p>
+    <div class="now" role="status">
+      <ol class="ticks" aria-hidden="true"><li></li><li></li><li></li><li></li><li></li></ol>
+      <p class="when">Nov 2&ndash;8 <span>Sample week</span></p>
+      <p class="what">A sample week on the desk.</p>
+      <button type="button" class="btn now-btn icon" id="pp" aria-pressed="false" aria-label="Pause"></button>
+      <button type="button" class="btn now-btn" id="nx" hidden>Next step</button>
     </div>
-    <p id="narr" aria-live="polite" aria-atomic="true"></p>
-  </div>
-  <p id="tally" class="xs muted"></p>
-  <p id="rmnote" class="xs muted" hidden>Reduced motion is on, so nothing moves by itself. Use Next step, or read the week as a list.</p>
-  <details class="list" id="stepsbox" hidden><summary>Read the week as a list</summary><ol class="steps" id="steps"></ol></details>
-
-  <section class="blk more-wrap" aria-labelledby="h-m">
-    <h2 id="h-m" class="kicker">What you&rsquo;re looking at</h2>
-    <ul class="more">
-      <li><a href="desk.html"><b>How the desk works</b><span>Three seats, one stamp, and the commitments the record is held to.</span></a></li>
-      <li><a href="committee.html"><b>Meet the committee</b><span>Who writes, who argues, who decides, and the bar an open desk has to clear.</span></a></li>
-      <li><a href="record.html"><b>The record</b><span>Every call, stamp, veto and loss, plus the paper book and progress to 100 closed calls.</span></a></li>
-    </ul>
   </section>
 </main>
+<details class="list wk" id="stepsbox"><summary>Read the week as a list</summary><ol class="steps" id="steps"></ol></details>
 
-<footer class="wrap">
-  <p>Paper calls only, replayed from a public log. Not advice. No real money, no sizing, no holdings.</p>
-  <p>Design preview on labeled sample data (XMPL and SMPL are placeholder tickers). The receptionist, the visitor, the lights and the sky are set dressing; only the three seated characters stand for model seats. High Leverage is a placeholder name.</p>
-  <p>Built by Sidd. <a href="https://siddharthshah.me">siddharthshah.me</a></p>
+<footer class="foot">
+  <p>Sample data, not advice. Paper calls only. Built by Sidd &middot; <a href="https://siddharthshah.me">siddharthshah.me</a></p>
 </footer>
+<script src="assets/vendor/gsap-3.13.0.min.js"></script>
 <script src="assets/sample.js"></script>
-<script src="assets/px.js"></script>
-<script src="assets/office.js"></script>
+<script src="assets/floor.js"></script>
+<script src="assets/home.js"></script>
+<script src="assets/nav.js"></script>
 </body>
 </html>

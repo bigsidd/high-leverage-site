@@ -1,41 +1,55 @@
 <!doctype html>
-<html lang="en" data-state="day0">
+<html lang="en" data-state="sample">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="color-scheme" content="light dark">
 <title>The record · High Leverage Research</title>
-<meta name="description" content="Every call, stamp, veto and loss on one dated rail, plus the paper book. Sample data in this preview.">
+<meta name="description" content="Every call, signature, veto and loss on one dated rail, plus the paper book. Opens on a labeled sample week; the real ledger is still empty.">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="assets/fonts.css">
 <link rel="stylesheet" href="assets/tokens.css">
 <link rel="stylesheet" href="assets/site.css">
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
-<div class="wrap">
-  <nav class="top nav" aria-label="Site">
+<header class="bar">
+  <p class="mark"><a href="index.html"><svg class="lever" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M2.5 12.6 21.5 6.4" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" fill="none"/><path d="M8 11 4 19h8z" fill="currentColor"/></svg><span>High Leverage Research</span></a></p>
+  <button type="button" class="menu" aria-expanded="false" aria-controls="sitenav">Menu</button>
+  <nav aria-label="Site" id="sitenav">
     <ul>
-      <li><a href="index.html">Home</a></li>
       <li><a href="desk.html">How it works</a></li>
       <li><a href="committee.html">Committee</a></li>
-      <li><a href="record.html" aria-current="page">Record</a></li>
+      <li><a href="record.html" aria-current="page">The record</a></li>
     </ul>
   </nav>
-</div>
+</header>
 
-<main id="main" class="wrap" tabindex="-1">
+<main id="main" class="wrap has-vig" tabindex="-1">
+<div class="vignette" data-vignette="record" aria-hidden="true"></div>
+<div class="col">
 <header class="hd">
-  <p class="kicker">High Leverage Research</p>
   <h1>The record</h1>
-  <p class="tagline">Every call, stamp, veto and loss, on one dated rail.</p>
+  <p class="tagline">Every call, signature, veto and loss, on one dated rail.</p>
   <div class="bar1">
-    <span class="preview">Design preview · sample data</span>
+    <span class="preview sw" role="note">Sample week &middot; sample data &middot; these are made-up examples, not results</span>
+    <span class="preview d0">Real ledger &middot; empty</span>
     <div class="tog" role="group" aria-label="Show the record as">
-      <button type="button" data-set="day0" aria-pressed="true">Day 0</button>
-      <button type="button" data-set="sample" aria-pressed="false">Sample week</button>
+      <button type="button" data-set="sample" aria-pressed="true">Sample week</button>
+      <button type="button" data-set="day0" aria-pressed="false">Real ledger</button>
     </div>
   </div>
+  <p class="small sw" data-gap="3">POL-1 to POL-6 are made-up examples on placeholder tickers (XMPL, SMPL), and the commit hashes are placeholders too. They are not results. This is the same sample week the homepage plays.</p>
+  <p class="small d0" data-gap="3">The committee isn&rsquo;t running yet, so the real ledger has no rows. Nothing below is a result until the first call is published and closed.</p>
 </header>
+
+<section class="blk" aria-labelledby="h-p">
+  <h2 id="h-p" class="kicker">Progress</h2>
+  <p class="prog"><span id="n-closed">0</span> of 100 closed calls <span class="sw">(sample)</span>
+    <small><span id="n-month">Month 0 of 6.</span> No edge is claimed until both are met. Counts only: percentages appear after 30 closed calls, always next to n.</small></p>
+  <div class="meter" aria-hidden="true"><i id="meter"></i></div>
+  <p class="counts"><span>Wins <b id="n-win">0</b></span><span>Losses <b id="n-loss">0</b></span><span>Open <b id="n-open">0</b></span><span>In the No tray <b id="n-tray">0</b></span></p>
+</section>
 
 <section class="blk" aria-labelledby="h-rules">
   <h2 id="h-rules" class="kicker">How the record is kept</h2>
@@ -44,14 +58,6 @@
     <li><b>Closed, never edited.</b> A close is a new row. Nothing already written can change.</li>
     <li><b>Vetoes stay ticker-less.</b> A chain that never publishes shows only its stage and date, now and later.</li>
   </ol>
-</section>
-
-<section class="blk" aria-labelledby="h-p">
-  <h2 id="h-p" class="kicker">Progress</h2>
-  <p class="prog"><span id="n-closed">0</span> of 100 closed calls
-    <small><span id="n-month">Month 0 of 6.</span> No edge is claimed until both are met. Counts only: percentages appear after 30 closed calls, always next to n.</small></p>
-  <div class="meter" aria-hidden="true"><i id="meter"></i></div>
-  <p class="counts"><span>Wins <b id="n-win">0</b></span><span>Losses <b id="n-loss">0</b></span><span>Open <b id="n-open">0</b></span><span>In the No tray <b id="n-tray">0</b></span></p>
 </section>
 
 <section class="blk" aria-labelledby="h-t">
@@ -75,7 +81,12 @@
 
 <section class="blk" aria-labelledby="h-tl">
   <h2 id="h-tl">Timeline</h2>
-  <p class="small muted">Every published event, newest first, grouped by the Sunday batch it went out with. Calls, stamps, vetoes and closes are tagged. Wins and losses are the same size.</p>
+  <p class="small muted">Every published event, newest first, grouped by the Sunday batch it went out with. Calls, signatures, vetoes and closes are tagged. Wins and losses are the same size.</p>
+  <div class="tlctl sw" id="tlctl">
+    <button type="button" class="btn" id="b-earlier" aria-expanded="false" aria-controls="weeks">Show 17 earlier weeks</button>
+    <button type="button" class="btn" id="b-routine" aria-pressed="false">Show routine events</button>
+    <span class="xs muted" id="tl-note" role="status">Showing the sample week, Nov 2 to Nov 8.</span>
+  </div>
   <p class="empty d0" data-gap="3">No events yet. The first appear with the first published call, or in the first Sunday batch.</p>
   <ol class="weeks sw" id="weeks"></ol>
 </section>
@@ -103,19 +114,20 @@
 
 <section class="blk" aria-labelledby="h-f">
   <h2 id="h-f">The raw feed</h2>
-  <p class="small muted">The replay on the homepage is driven by this feed, one JSON line per event. Same types, same fields as the real one will have.</p>
-  <p class="empty d0" data-gap="2">Empty on day 0.</p>
+  <p class="small muted">The replay on the homepage plays this feed, one JSON line per event. The real feed will have the same types and fields.</p>
+  <p class="empty d0" data-gap="2">The real feed is empty.</p>
   <details class="list sw"><summary>Show the sample week as <code>events.v1</code> lines</summary><pre class="jsonl" id="jsonl" tabindex="0"></pre></details>
 </section>
+</div>
 </main>
 
-<footer class="wrap">
-  <p>Paper calls only. Not advice. No real money, no sizing, no holdings.</p>
-  <p>Design preview on labeled sample data. XMPL and SMPL are placeholder tickers, and the commit hashes are placeholders too. High Leverage is a placeholder name.</p>
-  <p>Built by Sidd. <a href="https://siddharthshah.me">siddharthshah.me</a></p>
+<footer class="foot">
+  <p>Sample data, not advice. Paper calls only. Built by Sidd &middot; <a href="https://siddharthshah.me">siddharthshah.me</a></p>
 </footer>
+<script src="assets/floor.js"></script>
+<script src="assets/vignette.js"></script>
 <script src="assets/sample.js"></script>
-<script src="assets/px.js"></script>
 <script src="assets/record.js"></script>
+<script src="assets/nav.js"></script>
 </body>
 </html>
